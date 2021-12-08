@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 class DirectoryEntry{
-	protected ByteBuffer bytes;
+	protected ByteBuffer byteBuffer;
+	protected byte[] bytes;
 	protected HashMap<String, Object> fields = new HashMap<String, Object>();
 
-	public DirectoryEntry(byte[] b){
-		bytes = ByteBuffer.wrap(b);
-		bytes.order(ByteOrder.LITTLE_ENDIAN);
+	public DirectoryEntry(byte[] bytes){
+		this.bytes = bytes;
+		byteBuffer = ByteBuffer.wrap(bytes);
+		byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 		initFields();
 	}
 
@@ -35,21 +37,21 @@ class DirectoryEntry{
 	}
 
 	protected void initFields(){
-		fields.put("firstCharOfFilename", bytes.get(0));
+		fields.put("firstCharOfFilename", byteBuffer.get(0));
 		fields.put("char2To11Filename", getAsciiString(1, 10));
-		fields.put("fileAttributes", bytes.get(11));
+		fields.put("fileAttributes", byteBuffer.get(11));
 		fields.put("highBytesAddrFirstCluster", getBytes(20, 2));
 		fields.put("lowBytesAddrFirstCluster", getBytes(26, 2));
-		fields.put("fileSize", bytes.getInt(28));
+		fields.put("fileSize", byteBuffer.getInt(28));
 	}
 	private String getAsciiString(int index, int size){
 		byte[] data = new byte[size];
-		bytes.get(index, data);
+		byteBuffer.get(index, data);
 		return new String(data, StandardCharsets.US_ASCII);
 	}
 	private byte[] getBytes(int index, int size){
 		byte[] b = new byte[size];
-		bytes.get(b);
+		byteBuffer.get(b);
 		return b;
 	}
 }
