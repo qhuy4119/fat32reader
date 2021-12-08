@@ -20,7 +20,11 @@ class DirectoryEntry{
 		return new HashMap<String, Object>(fields);
 	}
 	public String getFilename(){
-		return (String)fields.get("firstCharOfFilename") + (String)fields.get("char2To11Filename");
+		String filename = (String)fields.get("firstCharOfFilename") + (String)fields.get("char2To11Filename");
+
+		filename = filename.replace((char)0xffff, Character.MIN_VALUE);
+		filename = filename.replace("\0", "");
+		return filename;
 	}
 
 	public int getAddrFirstCluster() {

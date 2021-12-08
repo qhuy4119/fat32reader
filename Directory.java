@@ -115,9 +115,10 @@ public class Directory extends File {
 		DataArea dataArea  = new DataArea(args[0], bs.getFields());
 		Directory dir = new Directory(null, null, bs, fat, dataArea, null);
 		File[] files = dir.getFiles();
-		// for (File f : files) {
-		// 	System.out.println(f.getFilename());
-		// }
+		for (File f : files) {
+			String filename = f.getFilename();
+			System.out.println(filename);
+		}
 	}
 
 }

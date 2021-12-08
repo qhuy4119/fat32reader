@@ -21,9 +21,12 @@ public class LFNDirectoryEntry extends DirectoryEntry{
 
 	@Override
 	public String getFilename(){
-		return (String)fields.get("char1To5Filename") + 
+		String filename = (String)fields.get("char1To5Filename") + 
 			(String)fields.get("char6To11Filename") + 
 			(String)fields.get("char12To13Filename");
+		filename = filename.replace((char)0xffff, Character.MIN_VALUE);
+		filename = filename.replace("\0", "");
+		return filename;
 	}
 
 
