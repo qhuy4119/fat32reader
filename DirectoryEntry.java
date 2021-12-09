@@ -1,6 +1,7 @@
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,8 @@ class DirectoryEntry{
 		return new HashMap<String, Object>(fields);
 	}
 	public String getFilename(){
-		String filename = (String)fields.get("firstCharOfFilename") + (String)fields.get("char2To11Filename");
+		String firstChar = new String(new byte[] {(Byte)fields.get("firstCharOfFilename")}, StandardCharsets.US_ASCII);
+		String filename = firstChar + (String)fields.get("char2To11Filename");
 
 		filename = filename.replace((char)0xffff, Character.MIN_VALUE);
 		filename = filename.replace("\0", "");
@@ -55,7 +57,7 @@ class DirectoryEntry{
 	}
 	private byte[] getBytes(int index, int size){
 		byte[] b = new byte[size];
-		byteBuffer.get(b);
+		byteBuffer.get(index, b);
 		return b;
 	}
 }
