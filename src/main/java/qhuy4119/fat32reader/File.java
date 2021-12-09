@@ -1,4 +1,4 @@
-package fat32reader;
+package qhuy4119.fat32reader;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
