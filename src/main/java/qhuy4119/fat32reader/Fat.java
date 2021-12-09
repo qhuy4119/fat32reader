@@ -24,7 +24,7 @@ public class Fat{
 	}
 
 	public int getEntry(int entryNumber) throws FileNotFoundException, IOException{
-		try (var in = new DataInputStream(new FileInputStream(filePath))){
+		try (DataInputStream in = new DataInputStream(new FileInputStream(filePath))){
 			in.skipBytes(fatStartByte + entryNumber*BYTES_PER_ENTRY);
 			return in.readInt();
 		}

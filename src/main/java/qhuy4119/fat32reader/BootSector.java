@@ -19,7 +19,7 @@ public class BootSector {
 
 	public BootSector(String filePath) throws FileNotFoundException, IOException{
 		this.filePath = filePath;
-		try(var in = new FileInputStream(this.filePath)){
+		try(FileInputStream in = new FileInputStream(this.filePath)){
 			bytes = ByteBuffer.wrap(in.readNBytes(512));
 			bytes.order(ByteOrder.LITTLE_ENDIAN);
 			fields.put("oemName", getAsciiString(3, 8));
@@ -47,7 +47,7 @@ public class BootSector {
 
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		var bs = new BootSector(args[0]);
+		BootSector bs = new BootSector(args[0]);
 		System.out.println(bs.fields);
 	}
 }

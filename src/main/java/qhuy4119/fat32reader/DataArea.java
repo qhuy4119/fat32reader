@@ -28,7 +28,7 @@ public class DataArea{
 			if (clusterAddr < 2){
 				return new byte[0];
 			}
-			try (var in = new RandomAccessFile(filePath, "r")){
+			try (RandomAccessFile in = new RandomAccessFile(filePath, "r")){
 				in.seek(startByte + (clusterAddr - 2)*bytesPerCluster);
 				byte[] buf = new byte[bytesPerCluster];
 				in.read(buf);
