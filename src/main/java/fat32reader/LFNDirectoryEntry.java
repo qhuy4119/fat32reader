@@ -1,3 +1,5 @@
+package fat32reader;
+
 import java.nio.charset.StandardCharsets;
 
 public class LFNDirectoryEntry extends DirectoryEntry{
